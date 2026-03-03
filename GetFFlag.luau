@@ -1,5 +1,4 @@
 -- GetFFlag.lua
-
 local Prefixes = {
     "DFString", "FString",
     "DFFloat",  "FFloat",
@@ -22,17 +21,15 @@ end
 
 return function(Flag)
     if type(Flag) ~= "string" or #Flag == 0 then
-        local Message = "flag must be a non-empty string, got " .. type(Flag)
-        return nil, Message
+        return nil, "flag must be non-empty string"
     end
 
     local Bare = Bloxstrap.TouchEnabled and StripPrefix(Flag) or Flag
-
-    local Ok, Result = pcall(getfflag, Bare)
-    if Ok and Result ~= nil then
-        return tostring(Result)
+    local ok, Value = pcall(getfflag, Bare)
+    
+    if ok and Value ~= nil then
+        return tostring(Value)
     end
-
-    local Message = "FFlag not found: " .. Bare .. " (original: " .. Flag .. ")"
-    return nil, Message
+    
+    return nil, "FFlag not found: " .. Bare
 end
