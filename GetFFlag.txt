@@ -1,0 +1,16 @@
+return function(flag, value)
+	if type(flag) ~= "string" then
+		return task.spawn(error, "string expected, got " .. type(flag))
+	end
+
+	local FFlag = flag
+	if Bloxstrap.TouchEnabled then
+		FFlag = flag:gsub("DFInt", ""):gsub("DFFlag", ""):gsub("FFlag", ""):gsub("FInt", ""):gsub("DFString", ""):gsub("FString", "")
+	end
+
+	if getfflag(FFlag) ~= nil then
+		return getfflag(FFlag)
+	else
+		return task.spawn(error, "FFlag expected, got " .. FFlag)
+	end
+end

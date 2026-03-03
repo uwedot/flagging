@@ -1,0 +1,23 @@
+local cloneref = cloneref or function(...) return ... end
+local HttpService = cloneref(game.GetService(game, "HttpService"))
+
+return function(flag, value)
+	if type(flag) ~= "string" then
+		return task.spawn(error, "string expected, got " .. type(flag))
+	end
+
+	local FFlag = flag
+	if Bloxstrap.TouchEnabled then
+		FFlag = flag:gsub("DFInt", ""):gsub("DFFlag", ""):gsub("FFlag", ""):gsub("FInt", ""):gsub("DFString", ""):gsub("FString", "")
+	end
+
+	if getfflag(FFlag) ~= nil then
+		local fflagfile = HttpService:JSONDecode(readfile("Bloxstrap/FFlags.json"))
+		fflagfile[flag] = tostring(value)
+		writefile("Bloxstrap/FFlags.json", HttpService:JSONEncode(fflagfile))
+		return setfflag(FFlag, tostring(value))
+	else
+		local err = isfile(errorlog) and readfile(errorlog) or "Error while loading FFlags: "
+		return writefile(errorlog, err .. "\nFFlag expected, got " .. FFlag)
+	end
+end
